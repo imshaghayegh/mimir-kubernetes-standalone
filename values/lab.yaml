@@ -1,0 +1,10 @@
+# LAB ONLY. The chart's bundled MinIO is not a production storage backend.
+# Default chart component topology and resource values are left upstream-owned.
+# Use a StorageClass with working dynamically provisioned PVCs.
+minio:
+  enabled: true
+mimir:
+  structuredConfig:
+    multitenancy_enabled: true
+    limits:
+      compactor_blocks_retention_period: 168h

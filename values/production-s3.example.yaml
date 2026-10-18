@@ -1,0 +1,33 @@
+# TEMPLATE, NOT DEPLOYABLE AS-IS.
+# For serious production, start from Grafana's official large.yaml sizing plan
+# and tune all component replicas/PVCs/zone-awareness for your node count.
+# This file configures only the external object-storage wiring.
+minio:
+  enabled: false
+mimir:
+  structuredConfig:
+    multitenancy_enabled: true
+    common:
+      storage:
+        backend: s3
+        s3:
+          endpoint: REPLACE_S3_ENDPOINT
+          region: REPLACE_S3_REGION
+          bucket_name: REPLACE_COMMON_BUCKET_IF_REQUIRED
+          access_key_id: ${AWS_ACCESS_KEY_ID}
+          secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+    blocks_storage:
+      backend: s3
+      s3:
+        bucket_name: REPLACE_BLOCKS_BUCKET
+    alertmanager_storage:
+      backend: s3
+      s3:
+        bucket_name: REPLACE_ALERTMANAGER_BUCKET
+    ruler_storage:
+      backend: s3
+      s3:
+        bucket_name: REPLACE_RULER_BUCKET
+# Inject AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY into EVERY Mimir component
+# via a Kubernetes Secret and supported chart env expansion mechanisms.
+# Validate rendered manifests before deploy; do not store real keys in Git.

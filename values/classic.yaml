@@ -1,0 +1,16 @@
+# Classic architecture: Mimir ingestion does NOT depend on Kafka.
+# Based on upstream official classic-architecture.yaml preset.
+kafka:
+  enabled: false
+mimir:
+  structuredConfig:
+    ingest_storage:
+      enabled: false
+      kafka:
+        address: null
+        topic: null
+        auto_create_topic_default_partitions: null
+    distributor:
+      remote_timeout: null
+    ingester:
+      push_grpc_method_enabled: null
